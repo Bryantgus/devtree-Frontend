@@ -1,5 +1,4 @@
 import { BookmarkSquareIcon, UserIcon } from '@heroicons/react/20/solid'
-import React from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 const tabs = [

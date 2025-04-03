@@ -1,8 +1,7 @@
-import { Navigate } from "react-router-dom";
-
-import { useQuery } from "@tanstack/react-query";
-import { getUser } from "../api/DevTreeApi";
-import Devtree from "../components/devtree";
+import { Navigate } from "react-router-dom"
+import { useQuery } from "@tanstack/react-query"
+import { getUser } from "../api/DevTreeApi"
+import Devtree from "../components/Devtree"
 
 
 export default function AppLayout() {
@@ -15,10 +14,6 @@ export default function AppLayout() {
     })
 
     if(isLoading) return 'Cargando...'
-    if(isError) return <Navigate to={'/auth/login'}/>
-
-    console.log(data);
-    
-    
+    if(isError) return <Navigate to={'/auth/login'}/>   
     if (data) return <Devtree data={data}/>
 }

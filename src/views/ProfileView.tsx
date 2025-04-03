@@ -1,15 +1,41 @@
 import { useForm } from "react-hook-form"
 import ErrorMessage from "../components/ErrorMessage"
+import { useQueryClient, useMutation } from "@tanstack/react-query"
+import { ProfileForm, User } from "../types"
+import { updateProfile } from "../api/DevTreeApi"
+import { toast } from "sonner"
 
 export default function ProfileView() {
 
-    const { register, handleSubmit, formState: { errors} } = useForm({ defaultValues: {
-        handle: ''
+    const queryClient = useQueryClient()
+    const data : User = queryClient.getQueryData(['user'])! 
+    
+    const { register, handleSubmit, formState: { errors } } = useForm<ProfileForm>({ defaultValues: {
+        handle: data.handle,
+        description: data.description
     }})
+
+    
+
+    const updateProfileMutation = useMutation({
+        mutationFn: updateProfile,
+        onError: (error) => {
+            toast.error(error.message);
+        },
+        onSuccess: (data) => {
+            toast.success(data)
+            queryClient.invalidateQueries({queryKey:['user']})            
+        }
+    })
+
+    const handleUserProfileForm = async (formData: ProfileForm) => {
+        await updateProfileMutation.mutateAsync(formData)
+    }
+
     return (
         <form 
             className="bg-white p-10 rounded-lg space-y-5"
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(handleUserProfileForm)}
         >
             <legend className="text-2xl text-slate-800 text-center">Editar Información</legend>
             <div className="grid grid-cols-1 gap-2">
@@ -36,7 +62,11 @@ export default function ProfileView() {
                     id="description"
                     className="border-none bg-slate-100 rounded-lg p-2"
                     placeholder="Tu Descripción"
+                    {...register('description', {
+                        required: "La descripcion es Obligatorio"
+                    })}
                 />
+                {errors.description && <ErrorMessage>{errors.description.message}</ErrorMessage>}
             </div>
 
             <div className="grid grid-cols-1 gap-2">

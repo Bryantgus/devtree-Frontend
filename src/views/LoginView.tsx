@@ -25,7 +25,8 @@ export default function LoginView() {
             toast.error(error.response.data.error)
         }
     }
-  }
+    }
+
   return (
     <>
         <h1 className="text-4xl text-white font-bold">Iniciar Sesión</h1>
