@@ -8,6 +8,7 @@ type DevTreeProps = {
 }
 
 export default function Devtree({data}: DevTreeProps) {
+    const [ enabledLinks, setEnablesLinks] = useState(JSON.parse(data.links).filter(item => item.enabled))
   return (
     <>
     <header className="bg-slate-800 py-5">
@@ -49,6 +50,7 @@ export default function Devtree({data}: DevTreeProps) {
                     {data.image && <img src={data.image} alt="Imagen Perfil" className="mx-auto max-w-[250px]"/>}
 
                     <p className="text-2xl text-center text-white">{data.description}</p>
+                    
                     
                 </div>
             </div>

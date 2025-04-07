@@ -5,6 +5,7 @@ import { ProfileForm, User } from "../types"
 import { updateProfile, uploadImage } from "../api/DevTreeApi"
 import { toast } from "sonner"
 
+
 export default function ProfileView() {
 
     const queryClient = useQueryClient()
@@ -45,18 +46,25 @@ export default function ProfileView() {
           
         }
     })
-
-    const handleUserProfileForm = async (formData: ProfileForm) => {
-        await updateProfileMutation.mutateAsync(formData)
-    }
-
+    
     const handleChangeImg = (e: React.ChangeEvent<HTMLInputElement>) => {
         if(e.target.files) {
             uploadImageMutation.mutate(e.target.files[0])
         }
-        
-        
     }
+    const handleUserProfileForm = (formData: ProfileForm) => {
+        const user = queryClient.getQueryData<User>(['user'])
+    
+        if (!user) {
+            console.error('User data not found in cache')
+            return
+        }
+    
+        user.description = formData.description
+        user.handle = formData.handle
+        updateProfileMutation.mutateAsync(user)
+    }
+
 
     return (
         <form 
