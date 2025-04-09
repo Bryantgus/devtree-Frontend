@@ -7,16 +7,15 @@ import { toast } from "sonner"
 
 
 export default function ProfileView() {
-
+    console.log("render profileView");
+    
     const queryClient = useQueryClient()
     const data : User = queryClient.getQueryData(['user'])! 
-    
+    queryClient.invalidateQueries({queryKey:['user']})  
     const { register, handleSubmit, formState: { errors } } = useForm<ProfileForm>({ defaultValues: {
         handle: data.handle,
         description: data.description
     }})
-
-    
 
     const updateProfileMutation = useMutation({
         mutationFn: updateProfile,
@@ -25,7 +24,7 @@ export default function ProfileView() {
         },
         onSuccess: (data) => {
             toast.success(data)
-            queryClient.invalidateQueries({queryKey:['user']})            
+                      
         }
     })
 
@@ -53,16 +52,16 @@ export default function ProfileView() {
         }
     }
     const handleUserProfileForm = (formData: ProfileForm) => {
-        const user = queryClient.getQueryData<User>(['user'])
+        const user : User = queryClient.getQueryData(['user'])!
     
         if (!user) {
             console.error('User data not found in cache')
             return
         }
-    
         user.description = formData.description
         user.handle = formData.handle
-        updateProfileMutation.mutateAsync(user)
+        updateProfileMutation.mutate(user)
+        
     }
 
 

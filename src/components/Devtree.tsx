@@ -10,11 +10,11 @@ type DevTreeProps = {
 }
 
 export default function Devtree({data}: DevTreeProps) {
-    const [ enabledLinks, setEnablesLinks] = useState<SocialNetwork[]>(JSON.parse(data.links).filter((item: SocialNetwork) => item.enabled))
+    const [enabledLinks, setEnabledLinks] = useState<SocialNetwork[]>(JSON.parse(data.links).filter((item: SocialNetwork) => item.enabled))
 
     useEffect(() => {
-        setEnablesLinks(JSON.parse(data.links).filter((item: SocialNetwork) => item.enabled))
-    },[data])
+        setEnabledLinks(JSON.parse(data.links).filter((item: SocialNetwork) => item.enabled))
+    }, [data])
   return (
     <>
     <header className="bg-slate-800 py-5">
@@ -58,10 +58,12 @@ export default function Devtree({data}: DevTreeProps) {
                     <p className="text-2xl text-center text-white">{data.description}</p>
                     <div className="mt-20 flex flex-col gap-5">
                         {enabledLinks.map(link => (
-                            <DevTreeLink key={link.name}
-                            link={link}/>
-                        ))}    
-                    </div>  
+                            <DevTreeLink 
+                                key={link.name}
+                                link={link}/>
+                        ))}
+                    </div>
+                    
                 </div>
             </div>
         </main>
