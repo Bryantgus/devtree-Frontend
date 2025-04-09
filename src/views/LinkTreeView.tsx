@@ -28,12 +28,7 @@ export default function LinkTreeView() {
     const updatedLink = devTreeLinks.map( link => link.name === e.target.name ? {...link, url:e.target.value} : link)
     setDevTreeLinks(updatedLink)
 
-    queryClient.setQueryData(['user'], (prevData: User) => {
-      return {
-        ...prevData,
-        links: JSON.stringify(updatedLink),
-      }
-    })
+   
   }
 
 
@@ -71,7 +66,7 @@ export default function LinkTreeView() {
   },[])
   return (
     <>
-    <button className='bg-cyan-400 p-2 text-lg w-full uppercase text-slate-600 rounded-lg font-bold mb-2'
+    <button className='bg-cyan-400 p-2 text-lg w-full uppercase text-slate-600 rounded-lg font-bold mb-2 cursor-pointer'
             onClick={() => mutate(user)}
             >Guardar Cambios</button>
       <div className='space-y-5'>
