@@ -19,7 +19,6 @@ export type LoginForm = Pick<User, 'email'> & {
 export type ProfileForm = Pick<User, 'handle' | 'description'>
 
 export type SocialNetwork = {
-    length: number
     id: number
     name: string
     url: string

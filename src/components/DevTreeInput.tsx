@@ -8,7 +8,7 @@ type DevTreeInputProps = {
 }
 export default function DevTreeInput({item, handleUrlChanges, handleEnableLink}: DevTreeInputProps) {
   return (
-    <div className="bg-neutral-300 shasow-sm p-5 flex items-center gap-3 cursor-pointer">
+    <div className="bg-neutral-300 shasow-sm p-5 flex items-center gap-3">
         <div 
         className="w-12 h-12 bg-cover"
         style={{backgroundImage: `url(/social/icon_${item.name}.svg)`}}>
