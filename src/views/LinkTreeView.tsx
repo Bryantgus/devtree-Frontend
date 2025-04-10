@@ -95,7 +95,7 @@ export default function LinkTreeView() {
             id: 0,
             enabled: false
           }
-        } else if(link.id > indexToUpdate){
+        } else if(link.id > indexToUpdate && (indexToUpdate !== 0 && link.id === 1)){
           return {
             ...link,
             id: link.id - 1
@@ -118,7 +118,7 @@ export default function LinkTreeView() {
 
   return (
     <>
-      <button className="bg-cyan-400 p-2 mb-2 text-lg w-full uppercase text-slate-600 rounded-lg cursor-pointer" onClick={() => mutate(user)}>Guardar Cambios</button>
+      <button className="bg-cyan-400 p-2 mb-2 text-lg w-full uppercase text-slate-600 rounded-lg cursor-pointer" onClick={() => mutate(queryClient.getQueryData(['user'])!)}>Guardar Cambios</button>
       <div className="space-y-5">
           {devTreeLinks.map( item => (
             <DevTreeInput key={item.name} item={item} handleUrlChanges={handleUrlChanges} handleEnableLink={handleEnableLink}/>

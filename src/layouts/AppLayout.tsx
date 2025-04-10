@@ -13,7 +13,7 @@ export default function AppLayout() {
         refetchOnWindowFocus: false
     })
 
-    if(isLoading) return 'Cargando...'
+    if(isLoading) return <p className="text-center text-black">Cargando...</p>
     if(isError) return <Navigate to={'/auth/login'}/>   
     if (data) return <Devtree data={data}/>    
 }
